@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useStore } from 'loft-react';
+import { useStore } from 'lofn-react';
 import { useAuth } from 'nauth-react';
 import { toast } from 'sonner';
 import { Settings, User, Lock, Save } from 'lucide-react';

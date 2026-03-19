@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useProduct, useCategory, useStore } from 'loft-react';
-import { ProductStatusEnum } from 'loft-react';
-import type { ProductInfo, CategoryInfo, ProductSearchParam } from 'loft-react';
+import { useProduct, useCategory, useStore } from 'lofn-react';
+import { ProductStatusEnum } from 'lofn-react';
+import type { ProductInfo, CategoryInfo, ProductSearchParam } from 'lofn-react';
 import { storeRoute } from '../../lib/constants';
 import { toast } from 'sonner';
 import {

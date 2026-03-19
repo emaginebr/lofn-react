@@ -3,22 +3,30 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from 'nauth-react';
 import { useStore, useCategory, useProduct } from 'lofn-react';
 import type { CategoryInfo, ProductInfo } from 'lofn-react';
-import { ShoppingCart, Search, Heart, ArrowRight, Hexagon, Loader2, Settings } from 'lucide-react';
+import { ShoppingCart, Heart, ChevronLeft, Hexagon, Loader2, Settings, Search } from 'lucide-react';
 import { storeRoute, ROUTES } from '../lib/constants';
 import { UserMenu } from '../components/UserMenu';
 
 const formatPrice = (price: number) =>
   new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price);
 
-export default function StorefrontPage() {
-  const { storeSlug } = useParams<{ storeSlug: string }>();
+const PAGE_SIZE = 12;
+
+export default function CategoryPage() {
+  const { storeSlug, categorySlug } = useParams<{ storeSlug: string; categorySlug: string }>();
   const { isAuthenticated } = useAuth();
   const { getStoreBySlug, setCurrentStore, currentStore } = useStore();
-  const { listActive: listActiveCategories } = useCategory();
-  const { listFeatured } = useProduct();
+  const { getBySlug: getCategoryBySlug } = useCategory();
+  const { listActive } = useProduct();
   const navigate = useNavigate();
-  const [categories, setCategories] = useState<CategoryInfo[]>([]);
-  const [featuredProducts, setFeaturedProducts] = useState<ProductInfo[]>([]);
+
+  const [category, setCategory] = useState<CategoryInfo | null>(null);
+  const [products, setProducts] = useState<ProductInfo[]>([]);
+  const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const totalPages = Math.ceil(products.length / PAGE_SIZE);
+  const paginatedProducts = products.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   useEffect(() => {
     if (!storeSlug) return;
@@ -29,12 +37,19 @@ export default function StorefrontPage() {
   }, [storeSlug, currentStore, getStoreBySlug, setCurrentStore, navigate]);
 
   useEffect(() => {
-    if (!storeSlug) return;
-    listActiveCategories(storeSlug).then(setCategories);
-    listFeatured(storeSlug).then(setFeaturedProducts);
-  }, [storeSlug, listActiveCategories, listFeatured]);
+    if (!storeSlug || !categorySlug) return;
+    setIsLoading(true);
+    const loadCategory = getCategoryBySlug(storeSlug, categorySlug)
+      .then(setCategory)
+      .catch(() => setCategory(null));
+    const loadProducts = listActive(storeSlug, categorySlug)
+      .then((prods) => { setProducts(prods); setPage(1); })
+      .catch(() => setProducts([]));
+    Promise.all([loadCategory, loadProducts])
+      .finally(() => setIsLoading(false));
+  }, [storeSlug, categorySlug, getCategoryBySlug, listActive, navigate]);
 
-  if (!currentStore) {
+  if (!currentStore || isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
@@ -65,9 +80,6 @@ export default function StorefrontPage() {
               </div>
               <button className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
                 <ShoppingCart className="w-5 h-5" />
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-amber-500 text-noir-950 text-[10px] font-bold flex items-center justify-center">
-                  3
-                </span>
               </button>
               {isAuthenticated && (
                 <Link
@@ -101,53 +113,42 @@ export default function StorefrontPage() {
         </div>
       </header>
 
-      {/* Hero Banner */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/8 via-transparent to-orange-500/5" />
-        <div className="relative container mx-auto px-4 py-20 md:py-28 text-center">
-          <h1 className="font-display text-5xl md:text-6xl text-foreground mb-4 animate-slide-up">
-            Transforme seu negocio
-          </h1>
-          <p className="text-base text-muted-foreground mb-8 max-w-lg mx-auto leading-relaxed animate-slide-up" style={{ animationDelay: '80ms', animationFillMode: 'backwards' }}>
-            Planos, consultorias e cursos para levar sua empresa ao proximo nivel.
-          </p>
-          <div className="flex gap-3 justify-center animate-slide-up" style={{ animationDelay: '160ms', animationFillMode: 'backwards' }}>
-            <button className="group px-5 py-2.5 bg-amber-500 text-noir-950 font-medium rounded-lg hover:bg-amber-400 transition-all text-sm flex items-center gap-2">
-              Ver Produtos
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-            <button className="px-5 py-2.5 bg-secondary text-foreground font-medium rounded-lg border border-border hover:bg-secondary/80 transition-all text-sm">
-              Saiba Mais
-            </button>
-          </div>
+      <div className="container mx-auto px-4 py-8">
+        {/* Breadcrumb */}
+        <div className="mb-6">
+          <Link
+            to={`/${storeSlug}`}
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-amber-500 transition-colors"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Voltar para a loja
+          </Link>
         </div>
-      </section>
 
-      <div className="container mx-auto px-4 py-10">
-        {/* Categories */}
-        {categories.length > 0 && (
-          <div className="flex gap-2 overflow-x-auto pb-4 mb-8">
-            {categories.map((cat) => (
-              <Link
-                key={cat.categoryId}
-                to={`/${storeSlug}/${cat.slug}`}
-                className="shrink-0 px-4 py-1.5 rounded-full bg-secondary border border-border text-[13px] font-medium text-muted-foreground hover:text-foreground hover:border-amber-500/30 transition-all"
-              >
-                {cat.name} ({cat.productCount})
-              </Link>
-            ))}
+        {/* Category header */}
+        {category && (
+          <div className="mb-8">
+            <h1 className="font-display text-3xl text-foreground mb-1">{category.name}</h1>
+            <p className="text-sm text-muted-foreground">
+              {products.length} {products.length === 1 ? 'produto' : 'produtos'}
+            </p>
           </div>
         )}
 
-        {/* Featured Products Grid */}
-        {featuredProducts.length > 0 && (
+        {/* Products Grid */}
+        {products.length === 0 ? (
+          <div className="text-center py-16">
+            <ShoppingCart className="w-12 h-12 text-muted-foreground/30 mx-auto mb-4" />
+            <p className="text-sm font-medium text-foreground mb-1">Nenhum produto encontrado</p>
+            <p className="text-xs text-muted-foreground">Esta categoria ainda não possui produtos.</p>
+          </div>
+        ) : (
           <>
-            <h2 className="font-display text-2xl text-foreground mb-6">Produtos em Destaque</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
-              {featuredProducts.map((product) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 stagger">
+              {paginatedProducts.map((product) => (
                 <Link
                   key={product.productId}
-                  to={`/${storeSlug}/${(product as any).category?.slug ?? 'produto'}/${product.slug}`}
+                  to={`/${storeSlug}/${categorySlug}/${product.slug}`}
                   className="group glow-hover bg-card rounded-xl border border-border overflow-hidden animate-slide-up"
                 >
                   <div className="aspect-[4/3] bg-gradient-to-br from-secondary to-secondary/50 relative overflow-hidden">
@@ -170,7 +171,7 @@ export default function StorefrontPage() {
                     </button>
                   </div>
                   <div className="p-4">
-                    <h3 className="text-sm font-medium text-foreground mb-1 group-hover:text-amber-500 transition-colors">
+                    <h3 className="text-sm font-medium text-foreground mb-1 group-hover:text-amber-500 transition-colors truncate">
                       {product.name}
                     </h3>
                     <div className="flex items-center justify-between mt-2">
@@ -185,6 +186,39 @@ export default function StorefrontPage() {
                 </Link>
               ))}
             </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-10">
+                <button
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="px-3 py-1.5 text-sm rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                >
+                  Anterior
+                </button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <button
+                    key={p}
+                    onClick={() => setPage(p)}
+                    className={`w-9 h-9 text-sm rounded-lg font-medium transition-colors ${
+                      p === page
+                        ? 'bg-amber-500 text-noir-950'
+                        : 'border border-border bg-card text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {p}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                  className="px-3 py-1.5 text-sm rounded-lg border border-border bg-card text-muted-foreground hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                >
+                  Proximo
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>

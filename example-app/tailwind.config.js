@@ -4,7 +4,7 @@ export default {
   content: [
     './src/**/*.{ts,tsx}',
     './node_modules/nauth-react/dist/**/*.{js,mjs}',
-    './node_modules/loft-react/dist/**/*.{js,mjs}',
+    './node_modules/lofn-react/dist/**/*.{js,mjs}',
   ],
   theme: {
     container: {
@@ -99,5 +99,5 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 };

@@ -21,6 +21,12 @@ export enum OrderStatusEnum {
   Expired = 5,
 }
 
+export enum StoreStatusEnum {
+  Inactive = 0,
+  Active = 1,
+  Suspended = 2,
+}
+
 export enum OrderFrequencyEnum {
   Weekly = 7,
   Monthly = 30,
@@ -49,6 +55,9 @@ export interface ProductInfo {
   frequency: number;
   limit: number;
   status: ProductStatusEnum;
+  featured: boolean;
+  createdAt: string;
+  updatedAt: string;
   images: ProductImageInfo[];
 }
 
@@ -61,6 +70,7 @@ export interface ProductInsertInfo {
   frequency: number;
   limit: number;
   status: ProductStatusEnum;
+  featured: boolean;
 }
 
 /** Data required to update an existing product */
@@ -73,6 +83,7 @@ export interface ProductUpdateInfo {
   frequency: number;
   limit: number;
   status: ProductStatusEnum;
+  featured: boolean;
 }
 
 /** Product image information */
@@ -185,6 +196,9 @@ export interface StoreInfo {
   slug: string;
   name: string;
   ownerId: number;
+  logo: string;
+  logoUrl: string;
+  status: StoreStatusEnum;
 }
 
 /** Data required to create a new store */
@@ -196,6 +210,7 @@ export interface StoreInsertInfo {
 export interface StoreUpdateInfo {
   storeId: number;
   name: string;
+  status: StoreStatusEnum;
 }
 
 // ============================================================================
@@ -231,6 +246,7 @@ export interface ApiError {
 
 export interface LofnConfig {
   apiUrl: string;
+  tenantId?: string;
   getToken?: () => string | null;
   timeout?: number;
   headers?: Record<string, string>;
@@ -244,16 +260,12 @@ export interface LofnConfig {
 // ============================================================================
 
 export const API_ENDPOINTS = {
-  // Product
+  // Product (mutations + search REST — queries via GraphQL)
   PRODUCT_INSERT: '/product/{storeSlug}/insert',
   PRODUCT_UPDATE: '/product/{storeSlug}/update',
   PRODUCT_SEARCH: '/product/search',
-  PRODUCT_GET_BY_ID: '/product/{storeSlug}/getById',
-  PRODUCT_GET_BY_SLUG: '/product/getBySlug',
 
-  // Category
-  CATEGORY_LIST: '/category/{storeSlug}/list',
-  CATEGORY_GET_BY_ID: '/category/{storeSlug}/getById',
+  // Category (mutations REST — queries via GraphQL)
   CATEGORY_INSERT: '/category/{storeSlug}/insert',
   CATEGORY_UPDATE: '/category/{storeSlug}/update',
   CATEGORY_DELETE: '/category/{storeSlug}/delete',
@@ -269,12 +281,15 @@ export const API_ENDPOINTS = {
   ORDER_LIST: '/order/list',
   ORDER_GET_BY_ID: '/order/getById',
 
-  // Store
-  STORE_LIST: '/store/list',
-  STORE_GET_BY_ID: '/store/getById',
+  // Store (mutations only — queries via GraphQL)
   STORE_INSERT: '/store/insert',
   STORE_UPDATE: '/store/update',
+  STORE_UPLOAD_LOGO: '/store/uploadLogo',
   STORE_DELETE: '/store/delete',
+
+  // GraphQL
+  GRAPHQL_PUBLIC: '/graphql',
+  GRAPHQL_ADMIN: '/graphql/admin',
 
   // StoreUser
   STORE_USER_LIST: '/storeuser/{storeSlug}/list',

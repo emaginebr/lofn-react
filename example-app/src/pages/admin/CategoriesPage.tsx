@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import * as Dialog from '@radix-ui/react-dialog';
-import { CategoryList, CategoryForm } from 'loft-react';
-import type { CategoryInfo } from 'loft-react';
+import { CategoryList, CategoryForm } from 'lofn-react';
+import type { CategoryInfo } from 'lofn-react';
 import { toast } from 'sonner';
 import { X } from 'lucide-react';
 

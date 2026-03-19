@@ -10,7 +10,9 @@ import type {
 interface CategoryContextType {
   isLoading: boolean;
   list: (storeSlug: string) => Promise<CategoryInfo[]>;
+  listActive: (storeSlug: string) => Promise<CategoryInfo[]>;
   getById: (storeSlug: string, categoryId: number) => Promise<CategoryInfo>;
+  getBySlug: (storeSlug: string, categorySlug: string) => Promise<CategoryInfo>;
   insert: (storeSlug: string, data: CategoryInsertInfo) => Promise<CategoryInfo>;
   update: (storeSlug: string, data: CategoryUpdateInfo) => Promise<CategoryInfo>;
   remove: (storeSlug: string, categoryId: number) => Promise<void>;
@@ -28,8 +30,16 @@ export const CategoryProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     return await service.list(storeSlug);
   }, [service]);
 
+  const listActive = useCallback(async (storeSlug: string): Promise<CategoryInfo[]> => {
+    return await service.listActive(storeSlug);
+  }, [service]);
+
   const getById = useCallback(async (storeSlug: string, categoryId: number): Promise<CategoryInfo> => {
     return await service.getById(storeSlug, categoryId);
+  }, [service]);
+
+  const getBySlug = useCallback(async (storeSlug: string, categorySlug: string): Promise<CategoryInfo> => {
+    return await service.getBySlug(storeSlug, categorySlug);
   }, [service]);
 
   const insert = useCallback(async (storeSlug: string, data: CategoryInsertInfo): Promise<CategoryInfo> => {
@@ -62,7 +72,9 @@ export const CategoryProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const value: CategoryContextType = {
     isLoading,
     list,
+    listActive,
     getById,
+    getBySlug,
     insert,
     update,
     remove,

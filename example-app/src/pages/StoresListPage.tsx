@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useStore } from 'loft-react';
-import type { StoreInfo } from 'loft-react';
-import { Store, Plus, ArrowRight, Hexagon, Loader2 } from 'lucide-react';
+import { useStore } from 'lofn-react';
+import type { StoreInfo } from 'lofn-react';
+import { Store, Plus, Hexagon, Loader2 } from 'lucide-react';
 import { APP_NAME, ROUTES, storeRoute } from '../lib/constants';
 
 export default function StoresListPage() {
-  const { loadStores, stores, isLoading } = useStore();
+  const { listActiveStores, isLoading } = useStore();
   const navigate = useNavigate();
+  const [stores, setStores] = useState<StoreInfo[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    loadStores().then(() => setLoaded(true));
-  }, [loadStores]);
+    listActiveStores().then((result) => {
+      setStores(result);
+      setLoaded(true);
+    });
+  }, [listActiveStores]);
 
   // Auto-redirect if only one store
   useEffect(() => {
@@ -42,7 +46,7 @@ export default function StoresListPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto pt-8 animate-fade-in">
+    <div className="max-w-4xl mx-auto pt-8 animate-fade-in">
       {/* Header */}
       <div className="text-center mb-10">
         <div className="flex justify-center mb-5">
@@ -54,7 +58,7 @@ export default function StoresListPage() {
           {APP_NAME}
         </h1>
         <p className="text-sm text-muted-foreground">
-          Selecione uma loja para gerenciar
+          Descubra as melhores lojas e encontre o que voce precisa
         </p>
       </div>
 
@@ -73,23 +77,17 @@ export default function StoresListPage() {
           </Link>
         </div>
       ) : (
-        <div className="space-y-2 stagger">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger">
           {stores.map((store) => (
             <button
               key={store.storeId}
               onClick={() => handleSelect(store)}
-              className="glow-hover w-full flex items-center justify-between p-4 bg-card rounded-xl border border-border text-left group animate-slide-up transition-all"
+              className="glow-hover flex flex-col items-center gap-3 p-6 bg-card rounded-xl border border-border text-center group animate-slide-up transition-all"
             >
-              <div className="flex items-center gap-3.5 min-w-0">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0 group-hover:bg-amber-500/15 transition-colors">
-                  <Store className="w-5 h-5 text-amber-500" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-foreground truncate">{store.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">/{store.slug}</p>
-                </div>
+              <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center shrink-0 group-hover:bg-amber-500/15 transition-colors">
+                <Store className="w-6 h-6 text-amber-500" />
               </div>
-              <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all shrink-0" />
+              <p className="text-sm font-medium text-foreground truncate w-full">{store.name}</p>
             </button>
           ))}
         </div>
@@ -102,7 +100,7 @@ export default function StoresListPage() {
           className="inline-flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-amber-500 transition-colors"
         >
           <Plus className="w-3.5 h-3.5" />
-          Criar nova loja
+          Abra sua loja e comece a vender hoje
         </Link>
       </div>
     </div>

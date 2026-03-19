@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useProduct, useCategory, useImage, ProductStatusEnum } from 'loft-react';
-import type { ProductInfo, CategoryInfo, ProductImageInfo } from 'loft-react';
+import { useProduct, useCategory, useImage, ProductStatusEnum } from 'lofn-react';
+import type { ProductInfo, CategoryInfo, ProductImageInfo } from 'lofn-react';
 import { storeRoute } from '../../lib/constants';
 import { toast } from 'sonner';
 import {

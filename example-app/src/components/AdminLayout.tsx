@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from 'nauth-react';
-import { useStore } from 'loft-react';
+import { useStore } from 'lofn-react';
 import { ROUTES, APP_NAME, storeRoute } from '../lib/constants';
 import { UserMenu } from './UserMenu';
 import {

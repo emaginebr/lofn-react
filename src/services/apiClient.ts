@@ -14,12 +14,16 @@ export function createApiClient(config: LofnConfig): AxiosInstance {
     },
   });
 
-  // Request interceptor — adds Bearer token
+  // Request interceptor — adds Bearer token and tenant ID
   client.interceptors.request.use(
     async (reqConfig) => {
       const token = config.getToken?.();
       if (token) {
         reqConfig.headers.Authorization = `Bearer ${token}`;
+      }
+
+      if (config.tenantId) {
+        reqConfig.headers['X-Tenant-Id'] = config.tenantId;
       }
 
       if (isDevelopment) {

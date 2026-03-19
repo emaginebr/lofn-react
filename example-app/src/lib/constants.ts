@@ -36,5 +36,5 @@ export function storeRoute(storeSlug: string, sub: string = '') {
 export const EXTERNAL_LINKS = {
   TERMS: '/terms',
   PRIVACY: '/privacy',
-  DOCS: 'https://github.com/emaginebr/loft-react',
+  DOCS: 'https://github.com/emaginebr/lofn-react',
 } as const;

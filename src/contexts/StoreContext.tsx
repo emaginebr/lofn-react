@@ -12,9 +12,12 @@ interface StoreContextType {
   currentStore: StoreInfo | null;
   isLoading: boolean;
   listStores: () => Promise<StoreInfo[]>;
+  listActiveStores: () => Promise<StoreInfo[]>;
   getStoreById: (storeId: number) => Promise<StoreInfo>;
+  getStoreBySlug: (storeSlug: string) => Promise<StoreInfo>;
   insertStore: (data: StoreInsertInfo) => Promise<StoreInfo>;
   updateStore: (data: StoreUpdateInfo) => Promise<StoreInfo>;
+  uploadStoreLogo: (storeId: number, file: File) => Promise<StoreInfo>;
   deleteStore: (storeId: number) => Promise<void>;
   setCurrentStore: (store: StoreInfo | null) => void;
   loadStores: () => Promise<void>;
@@ -34,8 +37,16 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return await service.list();
   }, [service]);
 
+  const listActiveStores = useCallback(async (): Promise<StoreInfo[]> => {
+    return await service.listActive();
+  }, [service]);
+
   const getStoreById = useCallback(async (storeId: number): Promise<StoreInfo> => {
     return await service.getById(storeId);
+  }, [service]);
+
+  const getStoreBySlug = useCallback(async (storeSlug: string): Promise<StoreInfo> => {
+    return await service.getBySlug(storeSlug);
   }, [service]);
 
   const insertStore = useCallback(async (data: StoreInsertInfo): Promise<StoreInfo> => {
@@ -55,6 +66,20 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const store = await service.update(data);
       setStores((prev) => prev.map((s) => (s.storeId === data.storeId ? store : s)));
       if (currentStore?.storeId === data.storeId) {
+        setCurrentStore(store);
+      }
+      return store;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [service, currentStore]);
+
+  const uploadStoreLogo = useCallback(async (storeId: number, file: File): Promise<StoreInfo> => {
+    setIsLoading(true);
+    try {
+      const store = await service.uploadLogo(storeId, file);
+      setStores((prev) => prev.map((s) => (s.storeId === storeId ? store : s)));
+      if (currentStore?.storeId === storeId) {
         setCurrentStore(store);
       }
       return store;
@@ -91,9 +116,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     currentStore,
     isLoading,
     listStores,
+    listActiveStores,
     getStoreById,
+    getStoreBySlug,
     insertStore,
     updateStore,
+    uploadStoreLogo,
     deleteStore,
     setCurrentStore,
     loadStores,

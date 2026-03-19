@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useStore, OrderList, OrderDetail } from 'loft-react';
-import type { OrderInfo } from 'loft-react';
+import { useStore, OrderList, OrderDetail } from 'lofn-react';
+import type { OrderInfo } from 'lofn-react';
 import { toast } from 'sonner';
 
 export default function OrdersPage() {

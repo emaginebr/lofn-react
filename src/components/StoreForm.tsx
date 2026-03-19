@@ -46,7 +46,7 @@ export const StoreForm: React.FC<StoreFormProps> = ({
     try {
       let result: StoreInfo;
       if (isEditing && store) {
-        result = await updateStore({ storeId: store.storeId, name: name.trim() });
+        result = await updateStore({ storeId: store.storeId, name: name.trim(), status: store.status });
       } else {
         result = await insertStore({ name: name.trim() });
       }

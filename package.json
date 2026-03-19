@@ -1,5 +1,5 @@
 {
-  "name": "loft-react",
+  "name": "lofn-react",
   "version": "0.1.0",
   "description": "React components and hooks for Lofn API integration",
   "author": "Rodrigo Landim",
@@ -44,12 +44,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/emaginebr/loft-react"
+    "url": "https://github.com/emaginebr/lofn-react"
   },
   "bugs": {
-    "url": "https://github.com/emaginebr/loft-react/issues"
+    "url": "https://github.com/emaginebr/lofn-react/issues"
   },
-  "homepage": "https://github.com/emaginebr/loft-react#readme",
+  "homepage": "https://github.com/emaginebr/lofn-react#readme",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

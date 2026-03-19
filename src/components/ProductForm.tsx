@@ -24,6 +24,7 @@ interface ProductFormData {
   limit: string;
   categoryId: string;
   status: string;
+  featured: boolean;
 }
 
 const initialData: ProductFormData = {
@@ -34,6 +35,7 @@ const initialData: ProductFormData = {
   limit: '1',
   categoryId: '',
   status: String(ProductStatusEnum.Active),
+  featured: false,
 };
 
 export const ProductForm: React.FC<ProductFormProps> = ({
@@ -74,6 +76,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         limit: String(product.limit),
         categoryId: product.categoryId ? String(product.categoryId) : '',
         status: String(product.status),
+        featured: product.featured,
       });
     } else {
       setForm(initialData);
@@ -103,6 +106,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         limit: parseInt(form.limit) || 1,
         categoryId: form.categoryId ? parseInt(form.categoryId) : null,
         status: parseInt(form.status) as ProductStatusEnum,
+        featured: form.featured,
       };
 
       let result: ProductInfo;

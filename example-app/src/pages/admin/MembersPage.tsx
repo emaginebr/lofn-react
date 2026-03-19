@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import * as Dialog from '@radix-ui/react-dialog';
-import { StoreUserList, useStoreUser } from 'loft-react';
+import { StoreUserList, useStoreUser } from 'lofn-react';
 import { useNAuth } from 'nauth-react';
 import type { UserInfo } from 'nauth-react';
 import { toast } from 'sonner';

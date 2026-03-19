@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useStore } from 'loft-react';
+import { useStore } from 'lofn-react';
 import { ROUTES, storeRoute } from '../lib/constants';
 import { toast } from 'sonner';
 import { ArrowLeft, Store, Hexagon } from 'lucide-react';

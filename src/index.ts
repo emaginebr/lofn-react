@@ -1,4 +1,4 @@
-// Main entry point for @lofn/loft-react package
+// Main entry point for @lofn/lofn-react package
 
 // Styles
 import './styles/index.css';
@@ -23,6 +23,7 @@ export { ImageService } from './services/imageService';
 export { OrderService } from './services/orderService';
 export { StoreService } from './services/storeService';
 export { StoreUserService } from './services/storeUserService';
+export { GraphQLClient } from './services/graphqlClient';
 
 // UI Components
 export { Button } from './components/ui/button';
@@ -61,6 +62,7 @@ export { StoreUserList } from './components/StoreUserList';
 // Enums
 export {
   ProductStatusEnum,
+  StoreStatusEnum,
   OrderStatusEnum,
   OrderFrequencyEnum,
 } from './types';
