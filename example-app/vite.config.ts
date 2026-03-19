@@ -6,7 +6,7 @@ import autoprefixer from 'autoprefixer';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/nauth/',
+  base: '/lofn/',
   plugins: [react()],
     css: {
     postcss: {

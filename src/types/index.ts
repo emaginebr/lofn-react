@@ -1,5 +1,8 @@
 // Lofn API Types
 
+import type { UserInfo } from 'nauth-react';
+export type { UserInfo };
+
 // ============================================================================
 // Enums
 // ============================================================================
@@ -25,17 +28,8 @@ export enum OrderFrequencyEnum {
 }
 
 // ============================================================================
-// External Types (NAuth)
+// External Types (NAuth) — UserInfo imported and re-exported above
 // ============================================================================
-
-/** User info from NAuth. Represents the authenticated user data. */
-export interface UserInfo {
-  userId: number;
-  slug: string;
-  imageUrl: string;
-  name: string;
-  email: string;
-}
 
 // ============================================================================
 // Product Types

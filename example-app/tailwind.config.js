@@ -4,6 +4,7 @@ export default {
   content: [
     './src/**/*.{ts,tsx}',
     './node_modules/nauth-react/dist/**/*.{js,mjs}',
+    './node_modules/loft-react/dist/**/*.{js,mjs}',
   ],
   theme: {
     container: {
@@ -14,6 +15,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Instrument Serif"', 'Georgia', 'serif'],
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -21,9 +26,10 @@ export default {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         brand: {
-          primary: '#7C3AED',
-          secondary: '#DB2777',
-          accent: '#5cdef5ff',
+          primary: '#D97706',
+          secondary: '#92400E',
+          accent: '#FBBF24',
+          warm: '#FEF3C7',
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
@@ -56,6 +62,20 @@ export default {
         outline: {
           DEFAULT: 'hsl(var(--border))',
           foreground: 'hsl(var(--foreground))',
+        },
+        // Custom dark palette
+        noir: {
+          50: '#FAF9F7',
+          100: '#F0EDE8',
+          200: '#DDD8CF',
+          300: '#C5BDB0',
+          400: '#A39888',
+          500: '#857864',
+          600: '#6B614F',
+          700: '#574F41',
+          800: '#1A1814',
+          900: '#12110E',
+          950: '#0A0908',
         },
       },
       borderRadius: {

@@ -63,6 +63,7 @@
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
+    "nauth-react": "^0.7.0",
     "react": "^18.3.0 || ^19.0.0",
     "react-dom": "^18.3.0 || ^19.0.0",
     "react-router-dom": "^6.30.0 || ^7.0.0"
@@ -99,6 +100,7 @@
     "eslint-plugin-storybook": "^0.6.15",
     "globals": "^15.14.0",
     "jsdom": "^23.2.0",
+    "nauth-react": "^0.7.1",
     "postcss": "^8.5.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
