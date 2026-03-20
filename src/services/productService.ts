@@ -27,6 +27,7 @@ const PRODUCT_FIELDS_WITH_CATEGORY = `
 `;
 
 /** Maps GraphQL productImages field to ProductInfo.images */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- GraphQL responses are untyped at this layer
 function mapProduct(p: any): ProductInfo {
   if (p.productImages && !p.images) {
     p.images = p.productImages;
@@ -35,6 +36,7 @@ function mapProduct(p: any): ProductInfo {
   return p as ProductInfo;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapProducts(products: any[]): ProductInfo[] {
   return products.map(mapProduct);
 }
@@ -119,7 +121,8 @@ export class ProductService {
     `, { storeSlug });
     let products = mapProducts(data.storeBySlug?.[0]?.products ?? []);
     if (categorySlug) {
-      products = products.filter((p: any) => p.category?.slug === categorySlug);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- category comes from GraphQL projection
+      products = products.filter((p) => (p as any).category?.slug === categorySlug);
     }
     return products.sort((a, b) => a.name.localeCompare(b.name));
   }

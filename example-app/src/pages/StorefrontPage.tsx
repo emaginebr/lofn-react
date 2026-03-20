@@ -153,6 +153,7 @@ export default function StorefrontPage() {
               {featuredProducts.map((product) => (
                 <Link
                   key={product.productId}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- category from GraphQL projection
                   to={`/${storeSlug}/${(product as any).category?.slug ?? 'produto'}/${product.slug}`}
                   className="group glow-hover bg-card rounded-xl border border-border overflow-hidden animate-slide-up"
                 >

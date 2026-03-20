@@ -25,7 +25,7 @@ export default function ProductsPage() {
   const { storeSlug } = useParams<{ storeSlug: string }>();
   const navigate = useNavigate();
   const { currentStore } = useStore();
-  const { search, insert, isLoading: productLoading } = useProduct();
+  const { search, insert } = useProduct();
   const { list: listCategories } = useCategory();
 
   const slug = storeSlug!;

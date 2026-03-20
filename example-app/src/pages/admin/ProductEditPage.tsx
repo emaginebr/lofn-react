@@ -6,7 +6,7 @@ import { storeRoute } from '../../lib/constants';
 import { toast } from 'sonner';
 import {
   ArrowLeft, Save, Upload, Trash2, GripVertical, ImagePlus,
-  Loader2, Image as ImageIcon,
+  Loader2,
 } from 'lucide-react';
 import { useRef } from 'react';
 
