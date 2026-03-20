@@ -1,6 +1,6 @@
 {
   "name": "lofn-react",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "React components and hooks for Lofn API integration",
   "author": "Rodrigo Landim",
   "license": "MIT",
