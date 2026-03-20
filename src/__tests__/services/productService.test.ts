@@ -58,8 +58,11 @@ describe('ProductService', () => {
 
   describe('getBySlug (GraphQL)', () => {
     it('finds product by slug within store', async () => {
-      const { images: _, ...productWithoutImages } = mockProduct;
-      const productWithImages = { ...productWithoutImages, productImages: [{ imageId: 1, image: 'a.png', imageUrl: 'url', sortOrder: 0 }] };
+      const productWithImages = {
+        ...mockProduct,
+        images: undefined,
+        productImages: [{ imageId: 1, image: 'a.png', imageUrl: 'url', sortOrder: 0 }],
+      };
       (client.post as ReturnType<typeof vi.fn>).mockResolvedValue({
         data: {
           data: { storeBySlug: [{ products: [productWithImages] }] },
