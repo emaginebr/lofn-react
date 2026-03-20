@@ -102,6 +102,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         name: form.name.trim(),
         description: form.description.trim(),
         price: parseFloat(form.price) || 0,
+        discount: 0,
         frequency: parseInt(form.frequency) || 30,
         limit: parseInt(form.limit) || 1,
         categoryId: form.categoryId ? parseInt(form.categoryId) : null,

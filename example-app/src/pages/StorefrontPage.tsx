@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from 'nauth-react';
-import { useStore, useCategory, useProduct } from 'lofn-react';
+import { useStore, useCategory, useProduct, useShopCar } from 'lofn-react';
 import type { CategoryInfo, ProductInfo } from 'lofn-react';
 import { ShoppingCart, Search, Heart, ArrowRight, Hexagon, Loader2, Settings } from 'lucide-react';
 import { storeRoute, ROUTES } from '../lib/constants';
@@ -16,6 +16,7 @@ export default function StorefrontPage() {
   const { getStoreBySlug, setCurrentStore, currentStore } = useStore();
   const { listActive: listActiveCategories } = useCategory();
   const { listFeatured } = useProduct();
+  const { itemCount } = useShopCar();
   const navigate = useNavigate();
   const [categories, setCategories] = useState<CategoryInfo[]>([]);
   const [featuredProducts, setFeaturedProducts] = useState<ProductInfo[]>([]);
@@ -63,12 +64,17 @@ export default function StorefrontPage() {
                   className="w-56 pl-9 pr-4 py-1.5 rounded-lg border border-border bg-secondary text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-amber-500/50 focus:border-amber-500/30 transition-all"
                 />
               </div>
-              <button className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
+              <Link
+                to={storeRoute(storeSlug!, ROUTES.CART)}
+                className="relative p-2 text-muted-foreground hover:text-foreground transition-colors"
+              >
                 <ShoppingCart className="w-5 h-5" />
-                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-amber-500 text-noir-950 text-[10px] font-bold flex items-center justify-center">
-                  3
-                </span>
-              </button>
+                {itemCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-amber-500 text-noir-950 text-[10px] font-bold flex items-center justify-center">
+                    {itemCount > 99 ? '99' : itemCount}
+                  </span>
+                )}
+              </Link>
               {isAuthenticated && (
                 <Link
                   to={storeRoute(storeSlug!, ROUTES.ADMIN)}

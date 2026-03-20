@@ -17,12 +17,13 @@ export const ROUTES = {
 
   // Store public (storefront)
   STORE_HOME: '/:storeSlug',
+  CART: 'cart',
 
   // Store admin (relative — prefixed with /:storeSlug/admin)
   ADMIN: 'admin',
   ADMIN_PRODUCTS: 'admin/products',
   ADMIN_CATEGORIES: 'admin/categories',
-  ADMIN_ORDERS: 'admin/orders',
+
   ADMIN_MEMBERS: 'admin/members',
   ADMIN_REPORTS: 'admin/reports',
   ADMIN_SETTINGS: 'admin/settings',

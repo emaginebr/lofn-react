@@ -1,0 +1,53 @@
+%% Diagram: lofn-react System Design
+%% Type: Flowchart
+%% Generated: 2026-03-19
+
+flowchart TD
+    subgraph app["React Application (example-app)"]
+        pages["Pages\nStorefront | Product | Cart\nCategory | Admin"]
+    end
+
+    subgraph lib["lofn-react Library"]
+        subgraph providers["Context Providers"]
+            lofn["LofnProvider\n(Axios Client)"]
+            store["StoreProvider"]
+            product["ProductProvider"]
+            category["CategoryProvider"]
+            image["ImageProvider"]
+            shopcar["ShopCarProvider"]
+            storeuser["StoreUserProvider"]
+        end
+
+        subgraph services["Service Layer"]
+            rest["REST Services\nStore | Product | Category\nImage | ShopCar | StoreUser"]
+            gql["GraphQL Client\nPublic & Admin queries"]
+        end
+
+        localStorage["localStorage\n(Cart persistence)"]
+    end
+
+    subgraph external["External Services"]
+        nauth["NAuth API\nAuthentication\nBearer Token"]
+        lofnapi["Lofn Backend API"]
+        restapi["REST Endpoints\n/store | /product | /category\n/image | /shopcar | /storeuser"]
+        gqlpublic["/graphql\nPublic queries\nstores | products | categories"]
+        gqladmin["/graphql/admin\nAuth queries\nmyStores | myProducts | myCategories"]
+    end
+
+    pages --> providers
+    lofn --> store & product & category & image & shopcar & storeuser
+    store & product & category --> gql
+    store & product & category & image & shopcar & storeuser --> rest
+    shopcar --> localStorage
+
+    nauth -->|"Bearer Token"| lofn
+    rest -->|"Axios + Auth Headers"| restapi
+    gql -->|"POST /graphql"| gqlpublic
+    gql -->|"POST /graphql/admin"| gqladmin
+    restapi & gqlpublic & gqladmin --> lofnapi
+
+    style app fill:#fef3c7,stroke:#f59e0b,color:#000
+    style lib fill:#ede9fe,stroke:#7c3aed,color:#000
+    style external fill:#ecfdf5,stroke:#10b981,color:#000
+    style providers fill:#e0e7ff,stroke:#6366f1,color:#000
+    style services fill:#f3e8ff,stroke:#a855f7,color:#000

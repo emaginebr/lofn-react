@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '@/utils/cn';
-import { ProductStatusEnum, OrderStatusEnum } from '@/types';
+import { ProductStatusEnum } from '@/types';
 
 type BadgeVariant = 'success' | 'warning' | 'danger' | 'info' | 'neutral';
 
@@ -38,20 +38,7 @@ const productStatusMap: Record<ProductStatusEnum, { label: string; variant: Badg
   [ProductStatusEnum.Expired]: { label: 'Expirado', variant: 'danger' },
 };
 
-const orderStatusMap: Record<OrderStatusEnum, { label: string; variant: BadgeVariant }> = {
-  [OrderStatusEnum.Incoming]: { label: 'Recebido', variant: 'info' },
-  [OrderStatusEnum.Active]: { label: 'Ativo', variant: 'success' },
-  [OrderStatusEnum.Suspended]: { label: 'Suspenso', variant: 'warning' },
-  [OrderStatusEnum.Finished]: { label: 'Finalizado', variant: 'neutral' },
-  [OrderStatusEnum.Expired]: { label: 'Expirado', variant: 'danger' },
-};
-
 export const ProductStatusBadge: React.FC<{ status: ProductStatusEnum; className?: string }> = ({ status, className }) => {
   const config = productStatusMap[status] || { label: 'Desconhecido', variant: 'neutral' as BadgeVariant };
-  return <StatusBadge variant={config.variant} className={className}>{config.label}</StatusBadge>;
-};
-
-export const OrderStatusBadge: React.FC<{ status: OrderStatusEnum; className?: string }> = ({ status, className }) => {
-  const config = orderStatusMap[status] || { label: 'Desconhecido', variant: 'neutral' as BadgeVariant };
   return <StatusBadge variant={config.variant} className={className}>{config.label}</StatusBadge>;
 };

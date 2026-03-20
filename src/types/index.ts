@@ -13,24 +13,10 @@ export enum ProductStatusEnum {
   Expired = 3,
 }
 
-export enum OrderStatusEnum {
-  Incoming = 1,
-  Active = 2,
-  Suspended = 3,
-  Finished = 4,
-  Expired = 5,
-}
-
 export enum StoreStatusEnum {
   Inactive = 0,
   Active = 1,
   Suspended = 2,
-}
-
-export enum OrderFrequencyEnum {
-  Weekly = 7,
-  Monthly = 30,
-  Annual = 365,
 }
 
 // ============================================================================
@@ -52,6 +38,7 @@ export interface ProductInfo {
   name: string;
   description: string;
   price: number;
+  discount: number;
   frequency: number;
   limit: number;
   status: ProductStatusEnum;
@@ -67,6 +54,7 @@ export interface ProductInsertInfo {
   name: string;
   description: string;
   price: number;
+  discount: number;
   frequency: number;
   limit: number;
   status: ProductStatusEnum;
@@ -80,6 +68,7 @@ export interface ProductUpdateInfo {
   name: string;
   description: string;
   price: number;
+  discount: number;
   frequency: number;
   limit: number;
   status: ProductStatusEnum;
@@ -138,52 +127,20 @@ export interface CategoryUpdateInfo {
 }
 
 // ============================================================================
-// Order Types
+// ShopCar Types
 // ============================================================================
 
-/** Main order information */
-export interface OrderInfo {
-  orderId: number;
-  storeId: number | null;
-  userId: number;
-  sellerId: number | null;
-  status: OrderStatusEnum;
-  createdAt: string;
-  updatedAt: string;
+/** Shopping cart information */
+export interface ShopCarInfo {
   user: UserInfo;
-  seller: UserInfo;
-  items: OrderItemInfo[];
+  items: ShopCarItemInfo[];
+  createdAt: string;
 }
 
-/** Order item information */
-export interface OrderItemInfo {
-  itemId: number;
-  orderId: number;
-  productId: number;
-  quantity: number;
+/** Shopping cart item information */
+export interface ShopCarItemInfo {
   product: ProductInfo;
-}
-
-/** Parameters for order search (paginated) */
-export interface OrderSearchParam {
-  storeId: number;
-  userId?: number | null;
-  sellerId?: number | null;
-  pageNum: number;
-}
-
-/** Parameters for order list with filters */
-export interface OrderParam {
-  storeId: number;
-  userId: number;
-  status?: OrderStatusEnum | null;
-}
-
-/** Paginated order search result */
-export interface OrderListPagedResult {
-  orders: OrderInfo[];
-  pageNum: number;
-  pageCount: number;
+  quantity: number;
 }
 
 // ============================================================================
@@ -275,11 +232,8 @@ export const API_ENDPOINTS = {
   IMAGE_LIST: '/image/list',
   IMAGE_DELETE: '/image/delete',
 
-  // Order
-  ORDER_UPDATE: '/order/update',
-  ORDER_SEARCH: '/order/search',
-  ORDER_LIST: '/order/list',
-  ORDER_GET_BY_ID: '/order/getById',
+  // ShopCar
+  SHOPCAR_INSERT: '/shopcar/insert',
 
   // Store (mutations only — queries via GraphQL)
   STORE_INSERT: '/store/insert',

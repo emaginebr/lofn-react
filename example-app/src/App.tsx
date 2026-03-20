@@ -6,7 +6,7 @@ import {
   ProductProvider,
   CategoryProvider,
   ImageProvider,
-  OrderProvider,
+  ShopCarProvider,
   StoreUserProvider,
 } from 'lofn-react';
 import { Toaster } from 'sonner';
@@ -24,11 +24,11 @@ import NewStorePage from './pages/NewStorePage';
 import StorefrontPage from './pages/StorefrontPage';
 import CategoryPage from './pages/CategoryPage';
 import ProductPage from './pages/ProductPage';
+import CartPage from './pages/CartPage';
 import DashboardPage from './pages/admin/DashboardPage';
 import ProductsPage from './pages/admin/ProductsPage';
 import ProductEditPage from './pages/admin/ProductEditPage';
 import CategoriesPage from './pages/admin/CategoriesPage';
-import OrdersPage from './pages/admin/OrdersPage';
 import MembersPage from './pages/admin/MembersPage';
 import SettingsPage from './pages/admin/SettingsPage';
 import ReportsPage from './pages/admin/ReportsPage';
@@ -55,7 +55,7 @@ function App() {
             <ProductProvider>
               <CategoryProvider>
                 <ImageProvider>
-                  <OrderProvider>
+                  <ShopCarProvider>
                     <StoreUserProvider>
                       <Toaster position="bottom-right" richColors />
                       <Routes>
@@ -81,6 +81,9 @@ function App() {
                         {/* /:storeSlug — home publica da loja (storefront) */}
                         <Route path="/:storeSlug" element={<StorefrontPage />} />
 
+                        {/* /:storeSlug/cart — carrinho de compras */}
+                        <Route path="/:storeSlug/cart" element={<CartPage />} />
+
                         {/* /:storeSlug/:categorySlug — produtos da categoria */}
                         <Route path="/:storeSlug/:categorySlug" element={<CategoryPage />} />
 
@@ -93,7 +96,6 @@ function App() {
                           <Route path="products" element={<ProductsPage />} />
                           <Route path="products/:productSlug" element={<ProductEditPage />} />
                           <Route path="categories" element={<CategoriesPage />} />
-                          <Route path="orders" element={<OrdersPage />} />
                           <Route path="members" element={<MembersPage />} />
                           <Route path="reports" element={<ReportsPage />} />
                           <Route path="settings" element={<SettingsPage />} />
@@ -103,7 +105,7 @@ function App() {
                         <Route path="*" element={<Navigate to={ROUTES.STORES} replace />} />
                       </Routes>
                     </StoreUserProvider>
-                  </OrderProvider>
+                  </ShopCarProvider>
                 </ImageProvider>
               </CategoryProvider>
             </ProductProvider>

@@ -7,7 +7,7 @@ import {
   LayoutDashboard,
   Package,
   Tag,
-  ShoppingCart,
+
   Users,
   Settings,
   BarChart3,
@@ -26,7 +26,7 @@ function useAdminNav(storeSlug: string) {
     { to: storeRoute(storeSlug, base), icon: LayoutDashboard, label: 'Dashboard' },
     { to: storeRoute(storeSlug, ROUTES.ADMIN_PRODUCTS), icon: Package, label: 'Produtos' },
     { to: storeRoute(storeSlug, ROUTES.ADMIN_CATEGORIES), icon: Tag, label: 'Categorias' },
-    { to: storeRoute(storeSlug, ROUTES.ADMIN_ORDERS), icon: ShoppingCart, label: 'Pedidos' },
+
     { to: storeRoute(storeSlug, ROUTES.ADMIN_MEMBERS), icon: Users, label: 'Membros' },
     { to: storeRoute(storeSlug, ROUTES.ADMIN_REPORTS), icon: BarChart3, label: 'Relatorios' },
     { to: storeRoute(storeSlug, ROUTES.ADMIN_SETTINGS), icon: Settings, label: 'Configuracoes' },

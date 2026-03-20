@@ -12,7 +12,7 @@ export { StoreProvider, useStore } from './contexts/StoreContext';
 export { ProductProvider, useProduct } from './contexts/ProductContext';
 export { CategoryProvider, useCategory } from './contexts/CategoryContext';
 export { ImageProvider, useImage } from './contexts/ImageContext';
-export { OrderProvider, useOrder } from './contexts/OrderContext';
+export { ShopCarProvider, useShopCar } from './contexts/ShopCarContext';
 export { StoreUserProvider, useStoreUser } from './contexts/StoreUserContext';
 
 // Services
@@ -20,7 +20,7 @@ export { createApiClient } from './services/apiClient';
 export { ProductService } from './services/productService';
 export { CategoryService } from './services/categoryService';
 export { ImageService } from './services/imageService';
-export { OrderService } from './services/orderService';
+export { ShopCarService } from './services/shopCarService';
 export { StoreService } from './services/storeService';
 export { StoreUserService } from './services/storeUserService';
 export { GraphQLClient } from './services/graphqlClient';
@@ -34,7 +34,7 @@ export { Avatar, AvatarImage, AvatarFallback } from './components/ui/avatar';
 // Shared Components
 export { LoadingOverlay } from './components/shared/LoadingOverlay';
 export { EmptyState } from './components/shared/EmptyState';
-export { StatusBadge, ProductStatusBadge, OrderStatusBadge } from './components/shared/StatusBadge';
+export { StatusBadge, ProductStatusBadge } from './components/shared/StatusBadge';
 export { ConfirmDialog } from './components/shared/ConfirmDialog';
 export { Pagination } from './components/shared/Pagination';
 export { FormField, TextAreaField } from './components/shared/FormField';
@@ -52,10 +52,6 @@ export { ProductImageManager } from './components/ProductImageManager';
 export { CategoryList } from './components/CategoryList';
 export { CategoryForm } from './components/CategoryForm';
 
-// Admin Components — Order
-export { OrderList } from './components/OrderList';
-export { OrderDetail } from './components/OrderDetail';
-
 // Admin Components — StoreUser
 export { StoreUserList } from './components/StoreUserList';
 
@@ -63,8 +59,6 @@ export { StoreUserList } from './components/StoreUserList';
 export {
   ProductStatusEnum,
   StoreStatusEnum,
-  OrderStatusEnum,
-  OrderFrequencyEnum,
 } from './types';
 
 // TypeScript Types
@@ -80,11 +74,8 @@ export type {
   CategoryInfo,
   CategoryInsertInfo,
   CategoryUpdateInfo,
-  OrderInfo,
-  OrderItemInfo,
-  OrderSearchParam,
-  OrderParam,
-  OrderListPagedResult,
+  ShopCarInfo,
+  ShopCarItemInfo,
   StoreInfo,
   StoreInsertInfo,
   StoreUpdateInfo,
@@ -101,8 +92,6 @@ export type { ProductFormProps } from './components/ProductForm';
 export type { ProductImageManagerProps } from './components/ProductImageManager';
 export type { CategoryListProps } from './components/CategoryList';
 export type { CategoryFormProps } from './components/CategoryForm';
-export type { OrderListProps } from './components/OrderList';
-export type { OrderDetailProps } from './components/OrderDetail';
 export type { StoreUserListProps } from './components/StoreUserList';
 export type { LoadingOverlayProps } from './components/shared/LoadingOverlay';
 export type { EmptyStateProps } from './components/shared/EmptyState';
