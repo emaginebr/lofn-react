@@ -120,10 +120,12 @@ export default function ProductsPage() {
         name: formName.trim(),
         description: '',
         price: parseFloat(formPrice) || 0,
+        discount: 0,
         frequency: parseInt(formFrequency) || 30,
         limit: 1,
         categoryId: formCategoryId ? parseInt(formCategoryId) : null,
         status: ProductStatusEnum.Active,
+        featured: false,
       });
       toast.success(`"${product.name}" criado`);
       setModalOpen(false);

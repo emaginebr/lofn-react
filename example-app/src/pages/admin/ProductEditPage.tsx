@@ -83,10 +83,12 @@ export default function ProductEditPage() {
         name: name.trim(),
         description: description.trim(),
         price: parseFloat(price) || 0,
+        discount: product.discount ?? 0,
         frequency: parseInt(frequency) || 30,
         limit: parseInt(limit) || 1,
         categoryId: categoryId ? parseInt(categoryId) : null,
         status: parseInt(status) as ProductStatusEnum,
+        featured: product.featured ?? false,
       });
       setProduct(updated);
       toast.success('Produto salvo');

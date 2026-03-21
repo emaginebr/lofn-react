@@ -39,7 +39,8 @@ export default defineConfig({
       'react/jsx-runtime': path.resolve(__dirname, './node_modules/react/jsx-runtime'),
       'react/jsx-dev-runtime': path.resolve(__dirname, './node_modules/react/jsx-dev-runtime'),
       'react-router-dom': path.resolve(__dirname, './node_modules/react-router-dom'),
+      'nauth-react': path.resolve(__dirname, './node_modules/nauth-react'),
     },
-    dedupe: ['react', 'react-dom', 'react-router-dom'],
+    dedupe: ['react', 'react-dom', 'react-router-dom', 'nauth-react'],
   },
 });

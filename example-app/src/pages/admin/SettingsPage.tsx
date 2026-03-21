@@ -29,7 +29,7 @@ export default function SettingsPage() {
 
     setSaving(true);
     try {
-      await updateStore({ storeId: currentStore.storeId, name: name.trim() });
+      await updateStore({ storeId: currentStore.storeId, name: name.trim(), status: currentStore.status });
       toast.success('Loja atualizada');
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Erro ao salvar');

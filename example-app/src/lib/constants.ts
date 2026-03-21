@@ -27,6 +27,11 @@ export const ROUTES = {
   ADMIN_MEMBERS: 'admin/members',
   ADMIN_REPORTS: 'admin/reports',
   ADMIN_SETTINGS: 'admin/settings',
+
+  // Aliases
+  DASHBOARD: '/stores',
+  ORDERS: 'admin/orders',
+  USER_EDIT: '/profile',
 } as const;
 
 /** Build an absolute store route */

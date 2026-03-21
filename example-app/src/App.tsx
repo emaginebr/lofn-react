@@ -40,10 +40,8 @@ function App() {
       <NAuthProvider
         config={{
           apiUrl: import.meta.env.VITE_API_URL,
-          tenantId: import.meta.env.VITE_TENANT_ID,
           headers: { 'X-Tenant-Id': import.meta.env.VITE_TENANT_ID },
           enableFingerprinting: true,
-          debug: true,
           redirectOnUnauthorized: ROUTES.LOGIN,
           onAuthChange: (user) => {
             console.log('Auth state changed:', user);

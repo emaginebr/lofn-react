@@ -201,9 +201,9 @@ jobs:
       run: |
         echo "## 📦 Published to NPM" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- Package: \`nnews-react\`" >> $GITHUB_STEP_SUMMARY
+        echo "- Package: \`lofn-react\`" >> $GITHUB_STEP_SUMMARY
         echo "- Version: \`${{ needs.prepare.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
-        echo "- Registry: https://www.npmjs.com/package/nnews-react" >> $GITHUB_STEP_SUMMARY
+        echo "- Registry: https://www.npmjs.com/package/lofn-react" >> $GITHUB_STEP_SUMMARY
 
     - name: Failure summary
       if: needs.publish.result == 'failure'
